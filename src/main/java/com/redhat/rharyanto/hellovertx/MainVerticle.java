@@ -1,5 +1,7 @@
 package com.redhat.rharyanto.hellovertx;
 
+import io.netty.util.internal.logging.InternalLoggerFactory;
+import io.netty.util.internal.logging.Log4J2LoggerFactory;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
@@ -16,7 +18,11 @@ public class MainVerticle extends AbstractVerticle {
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
 
+    InternalLoggerFactory.setDefaultFactory(Log4J2LoggerFactory.INSTANCE);
+
     ConfigRetriever retriever = ConfigRetriever.create(vertx);
+
+    logger.debug("Starting...");
 
     retriever.getConfig(json -> {
       int serverPort = PropertiesUtil.getConfigAsInteger(json.result(), "server.port", null);
@@ -28,7 +34,7 @@ public class MainVerticle extends AbstractVerticle {
       }).listen(serverPort, http -> {
         if (http.succeeded()) {
           startPromise.complete();
-          System.out.println("HTTP server started on port " + serverPort);
+          logger.info("HTTP server started on port " + serverPort);
         } else {
           startPromise.fail(http.cause());
         }

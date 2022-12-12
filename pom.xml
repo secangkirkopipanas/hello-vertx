@@ -18,7 +18,7 @@
 
     <vertx.version>4.3.5</vertx.version>
     <lombok.version>1.18.24</lombok.version>
-    <log4j-slf4j-impl.version>2.19.0</log4j-slf4j-impl.version>
+    <log4j.version>2.19.0</log4j.version>
     <junit-jupiter.version>5.7.0</junit-jupiter.version>
     <netty-resolver-dns-native-macos.version>4.1.85.Final</netty-resolver-dns-native-macos.version>
     <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
@@ -67,8 +67,19 @@
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-slf4j-impl</artifactId>
-      <version>${log4j-slf4j-impl.version}</version>
+      <version>${log4j.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.netty</groupId>

@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: container/Dockerfile
+      args:
+        app_name: hello-vertx
+        app_version: $APP_VERSION
+    image: quay.io/rh_rh/hello-vertx:$APP_VERSION
+    privileged: true
+    environment:
+      JAVA_OPTS: -Xms1G -Xmx2G
+      VERTX_CONFIG_PATH: /opt/hello-vertx/conf/application.yaml
+    ports:
+      - 8888:8888

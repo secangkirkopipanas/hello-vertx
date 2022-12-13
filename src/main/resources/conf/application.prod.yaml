@@ -3,7 +3,7 @@ server:
   path: "/"
 
 hazelcast:
-  mode: local
+  mode: kubernetes
 
 banner:
   file: "/banner.txt"

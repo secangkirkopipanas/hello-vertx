@@ -16,6 +16,7 @@
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
     <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
+    <fabric8-maven-plugin.version>4.4.2</fabric8-maven-plugin.version>
 
     <vertx.version>4.3.5</vertx.version>
     <lombok.version>1.18.24</lombok.version>
@@ -23,9 +24,13 @@
     <junit-jupiter.version>5.7.0</junit-jupiter.version>
     <netty-resolver-dns-native-macos.version>4.1.85.Final</netty-resolver-dns-native-macos.version>
     <hazelcast-kubernetes.version>2.2.3</hazelcast-kubernetes.version>
+    <hibernate-reactive-core.version>1.1.9.Final</hibernate-reactive-core.version>
 
     <main.verticle>com.redhat.rharyanto.hellovertx.MainVerticle</main.verticle>
-    <launcher.class>io.vertx.core.Launcher</launcher.class>
+    <launcher.class>com.redhat.rharyanto.hellovertx.Application</launcher.class>
+
+    <!-- Openshift -->
+    <fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:latest</fabric8.generator.from>
   </properties>
 
   <dependencyManagement>
@@ -72,6 +77,11 @@
       <version>${lombok.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.hibernate.reactive</groupId>
+      <artifactId>hibernate-reactive-core</artifactId>
+      <version>${hibernate-reactive-core.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
       <version>${log4j.version}</version>
@@ -115,11 +125,6 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.eclipse.jkube</groupId>
-        <artifactId>openshift-maven-plugin</artifactId>
-        <version>1.10.1</version>
-      </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin.version}</version>
@@ -170,5 +175,27 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>openshift</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>fabric8-maven-plugin</artifactId>
+            <version>${fabric8-maven-plugin.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>resource</goal>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>

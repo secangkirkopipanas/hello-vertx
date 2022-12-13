@@ -1,18 +1,17 @@
 <hazelcast>
     <properties>
-        <property name="hazelcast.discovery.enabled">true</property> (1)
+        <property name="hazelcast.discovery.enabled">true</property>
     </properties>
 
     <network>
         <join>
-            <multicast enabled="false"/> (2)
+            <multicast enabled="false"/>
             <tcp-ip enabled="false" />
 
             <discovery-strategies>
-                <discovery-strategy enabled="true"> (3)
-                    class="com.hazelcast.kubernetes.HazelcastKubernetesDiscoveryStrategy">
+                <discovery-strategy enabled="true" class="com.hazelcast.kubernetes.HazelcastKubernetesDiscoveryStrategy">
                     <properties>
-                        <property name="service-dns">hello-vertx</property> (4)
+                        <property name="service-dns">hello-vertx</property>
                     </properties>
                 </discovery-strategy>
             </discovery-strategies>

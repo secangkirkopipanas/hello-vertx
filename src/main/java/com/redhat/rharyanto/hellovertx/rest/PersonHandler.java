@@ -8,7 +8,6 @@ import io.vertx.ext.web.RoutingContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author <a href="mailto:rharyant@redhat.com">Robertus Lilik Haryanto</a>

@@ -48,7 +48,7 @@ public class PersonHandler {
         if (hzInstance != null) {
             persons = hzInstance.getList("person");
             if (persons.size() != 0) {
-                logger.info("Sync-ing existing Person data from Hazelcast...");
+                logger.info("Sync-ing existing Person data from Hazelcast (" + persons.size() + " persons)...");
             } else {
                 logger.info("Initialising new Person data...");
                 persons.addAll(DataInitializer.init());

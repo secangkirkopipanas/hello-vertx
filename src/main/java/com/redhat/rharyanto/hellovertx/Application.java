@@ -22,17 +22,24 @@ public class Application {
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
+    public static final String APP_NAME = "hello-vertx";
+
     public static void main(String[] args) {
 
-        String hzMode = (System.getProperty("hazelcast.mode") != null) ? System.getProperty("hazelcast.mode") : "local";
-
+        // Enable Log4J2 implementation instead
         InternalLoggerFactory.setDefaultFactory(Log4J2LoggerFactory.INSTANCE);
+
+        // Specify HZ mode, either 'dev' or 'file'
+        // 'dev' is multicast implementation of embedded HZ
+        // 'file' is file configuration based implementation of embedded HZ
+        String hzMode = (System.getProperty("hazelcast.mode") != null) ? System.getProperty("hazelcast.mode") : "dev";
 
         ClusterManager hzMgr = null;
         if (hzMode.equalsIgnoreCase("dev")) {
             Config hazelcastConfig = new Config();
             hazelcastConfig.getNetworkConfig().getJoin().getTcpIpConfig().addMember("127.0.0.1").setEnabled(true);
             hazelcastConfig.getNetworkConfig().getJoin().getMulticastConfig().setEnabled(false);
+            hazelcastConfig.setClusterName(APP_NAME + "-dev");
 
             hzMgr = new HazelcastClusterManager(hazelcastConfig);
 
@@ -41,7 +48,6 @@ public class Application {
         }
 
         VertxOptions options = new VertxOptions().setClusterManager(hzMgr);
-
         Vertx.clusteredVertx(options, res -> {
             if (res.succeeded()) {
                 Vertx vertx = res.result();

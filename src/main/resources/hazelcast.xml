@@ -13,14 +13,15 @@
         <join>
             <multicast enabled="false"/>
             <tcp-ip enabled="false" />
+            <kubernetes enabled="true" />
 
-            <discovery-strategies>
+            <!--<discovery-strategies>
                 <discovery-strategy enabled="true" class="com.hazelcast.kubernetes.HazelcastKubernetesDiscoveryStrategy">
                     <properties>
                         <property name="service-dns">hello-vertx</property>
                     </properties>
                 </discovery-strategy>
-            </discovery-strategies>
+            </discovery-strategies>-->
         </join>
     </network>
 </hazelcast>

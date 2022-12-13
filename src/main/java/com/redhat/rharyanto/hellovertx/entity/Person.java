@@ -3,10 +3,6 @@ package com.redhat.rharyanto.hellovertx.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -14,7 +10,6 @@ import java.util.UUID;
  * @author <a href="mailto:rharyant@redhat.com">Robertus Lilik Haryanto</a>
  */
 @Data
-@Entity
 @NoArgsConstructor
 public class Person implements Serializable {
 
@@ -43,14 +38,10 @@ public class Person implements Serializable {
         this.country = country;
     }
 
-    @Id
-    @GeneratedValue
     private String id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private int age;
 
     private Sex sex;

@@ -25,6 +25,7 @@
     <netty-resolver-dns-native-macos.version>4.1.85.Final</netty-resolver-dns-native-macos.version>
     <hazelcast-kubernetes.version>2.2.3</hazelcast-kubernetes.version>
     <hibernate-reactive-core.version>1.1.9.Final</hibernate-reactive-core.version>
+    <hsqldb.version>2.7.1</hsqldb.version>
 
     <main.verticle>com.redhat.rharyanto.hellovertx.MainVerticle</main.verticle>
     <launcher.class>com.redhat.rharyanto.hellovertx.Application</launcher.class>
@@ -79,11 +80,6 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>${lombok.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate.reactive</groupId>
-      <artifactId>hibernate-reactive-core</artifactId>
-      <version>${hibernate-reactive-core.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>

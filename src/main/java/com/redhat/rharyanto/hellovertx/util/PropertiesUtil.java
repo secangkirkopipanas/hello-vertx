@@ -1,11 +1,11 @@
-package com.redhat.rharyanto.hellovertx;
+package com.redhat.rharyanto.hellovertx.util;
 
 import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
 import io.vertx.core.json.JsonObject;
 
 /**
- * @author Robertus Lilik Haryanto <a href="mailto:rharyant@redhat.com" />
+ * @author <a href="mailto:rharyant@redhat.com">Robertus Lilik Haryanto</a>
  */
 public class PropertiesUtil {
 

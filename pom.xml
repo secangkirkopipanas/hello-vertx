@@ -15,13 +15,14 @@
     <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
+    <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
 
     <vertx.version>4.3.5</vertx.version>
     <lombok.version>1.18.24</lombok.version>
-    <log4j-slf4j-impl.version>2.19.0</log4j-slf4j-impl.version>
+    <log4j.version>2.19.0</log4j.version>
     <junit-jupiter.version>5.7.0</junit-jupiter.version>
     <netty-resolver-dns-native-macos.version>4.1.85.Final</netty-resolver-dns-native-macos.version>
-    <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
+    <hazelcast-kubernetes.version>2.2.3</hazelcast-kubernetes.version>
 
     <main.verticle>com.redhat.rharyanto.hellovertx.MainVerticle</main.verticle>
     <launcher.class>io.vertx.core.Launcher</launcher.class>
@@ -53,6 +54,11 @@
       <artifactId>vertx-hazelcast</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.hazelcast</groupId>
+      <artifactId>hazelcast-kubernetes</artifactId>
+      <version>${hazelcast-kubernetes.version}</version>
+    </dependency>
+    <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-config</artifactId>
     </dependency>
@@ -67,8 +73,19 @@
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-slf4j-impl</artifactId>
-      <version>${log4j-slf4j-impl.version}</version>
+      <version>${log4j.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.netty</groupId>
@@ -130,7 +147,6 @@
                 </transformer>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
               </transformers>
-              <outputFile>src/container/resources/${project.artifactId}-${project.version}-fat.jar</outputFile>
             </configuration>
           </execution>
         </executions>

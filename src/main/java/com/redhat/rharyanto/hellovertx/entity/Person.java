@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * @author <a href="mailto:rharyant@redhat.com">Robertus Lilik Haryanto</a>
@@ -14,7 +15,7 @@ import javax.persistence.Id;
 @Data
 @Entity
 @NoArgsConstructor
-public class Person {
+public class Person implements Serializable {
 
     public enum Sex {
         MALE, FEMALE, NONE

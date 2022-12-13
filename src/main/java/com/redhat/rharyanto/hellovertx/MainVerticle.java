@@ -1,5 +1,6 @@
 package com.redhat.rharyanto.hellovertx;
 
+import com.hazelcast.core.HazelcastInstance;
 import com.redhat.rharyanto.hellovertx.rest.PersonHandler;
 import com.redhat.rharyanto.hellovertx.util.PropertiesUtil;
 import io.vertx.core.AbstractVerticle;
@@ -24,12 +25,20 @@ public class MainVerticle extends AbstractVerticle {
   private static final Logger logger = LoggerFactory.getLogger(MainVerticle.class);
 
   private JsonObject jsonConfig = null;
+  private HazelcastInstance hzInstance = null;
 
-  private PersonHandler personHandler = new PersonHandler();
+  private PersonHandler personHandler = null;
   private HealthCheckHandler healthCheckHandler;
 
   public MainVerticle(JsonObject jsonConfig) {
     this.jsonConfig = jsonConfig;
+    this.personHandler = new PersonHandler();
+  }
+
+  public MainVerticle(JsonObject jsonConfig, HazelcastInstance hzInstance) {
+    this.jsonConfig = jsonConfig;
+    this.hzInstance = hzInstance;
+    this.personHandler = new PersonHandler(this.hzInstance);
   }
 
   @Override

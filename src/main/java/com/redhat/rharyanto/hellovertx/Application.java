@@ -1,7 +1,6 @@
 package com.redhat.rharyanto.hellovertx;
 
 import com.hazelcast.config.Config;
-import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.redhat.rharyanto.hellovertx.util.BannerUtil;
 import com.redhat.rharyanto.hellovertx.util.PropertiesUtil;
@@ -13,8 +12,6 @@ import io.vertx.core.VertxOptions;
 import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
 import io.vertx.core.spi.cluster.ClusterManager;
-import io.vertx.ext.healthchecks.HealthCheckHandler;
-import io.vertx.ext.healthchecks.HealthChecks;
 import io.vertx.spi.cluster.hazelcast.HazelcastClusterManager;
 
 import java.io.IOException;
@@ -39,7 +36,7 @@ public class Application {
         String hzMode = (System.getProperty("hazelcast.mode") != null) ? System.getProperty("hazelcast.mode") : "dev";
         logger.debug("Hazelcast mode: " + hzMode);
 
-        ClusterManager hzMgr = null;
+        HazelcastClusterManager hzMgr = null;
         if (hzMode.equalsIgnoreCase("dev")) {
             Config hazelcastConfig = new Config();
             hazelcastConfig.getNetworkConfig().getJoin().getTcpIpConfig().addMember("127.0.0.1").setEnabled(true);
@@ -53,8 +50,6 @@ public class Application {
             hzMgr = new HazelcastClusterManager();
         }
 
-        HazelcastInstance hzInstance = Hazelcast.newHazelcastInstance();
-
         VertxOptions options = new VertxOptions().setClusterManager(hzMgr);
         Vertx.clusteredVertx(options, res -> {
             if (res.succeeded()) {
@@ -64,8 +59,10 @@ public class Application {
                     try {
                         BannerUtil.show(PropertiesUtil.getConfig(json.result(), "banner.file", null));
 
+                        HazelcastInstance hzInstance = ((HazelcastClusterManager) options.getClusterManager()).getHazelcastInstance();
+
                         logger.info("Starting the application...");
-                        vertx.deployVerticle(new MainVerticle(json.result()));
+                        vertx.deployVerticle(new MainVerticle(json.result(), hzInstance));
 
                     } catch (IOException ioe) {
                         logger.error("Not able to retrieve banner file!");

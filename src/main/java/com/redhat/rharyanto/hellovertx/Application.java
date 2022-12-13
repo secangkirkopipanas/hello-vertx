@@ -11,6 +11,8 @@ import io.vertx.core.VertxOptions;
 import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
 import io.vertx.core.spi.cluster.ClusterManager;
+import io.vertx.ext.healthchecks.HealthCheckHandler;
+import io.vertx.ext.healthchecks.HealthChecks;
 import io.vertx.spi.cluster.hazelcast.HazelcastClusterManager;
 
 import java.io.IOException;

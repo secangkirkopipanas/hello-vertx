@@ -8,6 +8,8 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.healthchecks.HealthCheckHandler;
+import io.vertx.ext.healthchecks.HealthChecks;
 import io.vertx.ext.web.Router;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +26,7 @@ public class MainVerticle extends AbstractVerticle {
   private JsonObject jsonConfig = null;
 
   private PersonHandler personHandler = new PersonHandler();
+  private HealthCheckHandler healthCheckHandler;
 
   public MainVerticle(JsonObject jsonConfig) {
     this.jsonConfig = jsonConfig;
@@ -45,6 +48,9 @@ public class MainVerticle extends AbstractVerticle {
             logger.error("Failed to start HTTP server on port " + serverPort);
           }
       });
+
+    HealthChecks hc = HealthChecks.create(vertx);
+    healthCheckHandler = HealthCheckHandler.createWithHealthChecks(hc);
   }
 
   private Router route() {
@@ -71,6 +77,8 @@ public class MainVerticle extends AbstractVerticle {
             .produces("application/json")
             .handler(personHandler::getBySex)
             .failureHandler(frc -> frc.response().setStatusCode(404).end());
+
+    router.get("/health*").handler(healthCheckHandler);
 
     logger.info("Exposing " + router.getRoutes().size() + " routes...");
     return router;

@@ -11,7 +11,6 @@ import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
-import io.vertx.core.spi.cluster.ClusterManager;
 import io.vertx.spi.cluster.hazelcast.HazelcastClusterManager;
 
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class Application {
         // Specify HZ mode, either 'dev' or 'file'
         // 'dev' is multicast implementation of embedded HZ
         // 'file' is file configuration based implementation of embedded HZ
-        String hzMode = (System.getProperty("hazelcast.mode") != null) ? System.getProperty("hazelcast.mode") : "dev";
+        String hzMode = (System.getenv("HZ_MODE") != null) ? System.getenv("HZ_MODE") : "dev";
         logger.debug("Hazelcast mode: " + hzMode);
 
         HazelcastClusterManager hzMgr = null;

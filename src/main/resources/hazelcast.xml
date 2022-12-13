@@ -14,8 +14,7 @@
             <multicast enabled="false"/>
             <tcp-ip enabled="false" />
             <kubernetes enabled="true" />
-
-            <list name="person" />
         </join>
     </network>
+
 </hazelcast>

@@ -2,8 +2,5 @@ server:
   port: 9090
   path: "/"
 
-hazelcast:
-  mode: local
-
 banner:
   file: "/banner.txt"

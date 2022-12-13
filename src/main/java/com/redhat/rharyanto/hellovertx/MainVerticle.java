@@ -1,6 +1,7 @@
 package com.redhat.rharyanto.hellovertx;
 
 import com.redhat.rharyanto.hellovertx.rest.PersonHandler;
+import com.redhat.rharyanto.hellovertx.util.BannerUtil;
 import com.redhat.rharyanto.hellovertx.util.PropertiesUtil;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 import io.netty.util.internal.logging.Log4J2LoggerFactory;
@@ -23,6 +24,8 @@ public class MainVerticle extends AbstractVerticle {
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
+
+    BannerUtil.show("/banner.txt");
 
     logger.debug("Starting...");
     InternalLoggerFactory.setDefaultFactory(Log4J2LoggerFactory.INSTANCE);

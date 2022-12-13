@@ -14,8 +14,6 @@ import io.vertx.ext.healthchecks.HealthChecks;
 import io.vertx.ext.web.Router;
 import lombok.NoArgsConstructor;
 
-import java.io.IOException;
-
 /**
  * @author <a href="mailto:rharyant@redhat.com">Robertus Lilik Haryanto</a>
  */

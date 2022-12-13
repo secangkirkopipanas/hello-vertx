@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+/**
+ * @author <a href="mailto:rharyant@redhat.com">Robertus Lilik Haryanto</a>
+ */
 @ExtendWith(VertxExtension.class)
 public class TestMainVerticle {
 

@@ -2,7 +2,7 @@
 <Configuration packages="com.redhat.rharyanto.hellovertx">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{dd-MM-yyyy HH:mm:ss.SSS} %highlight{%-5level} [%t] %style{%-40logger{1.}} : %msg%n"/>
+            <PatternLayout pattern="%d{dd-MM-yyyy HH:mm:ss.SSS} %highlight{%-5level} [%-30t] %style{%-50logger{1.}} : %msg%n"/>
         </Console>
     </Appenders>
     <Loggers>

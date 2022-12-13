@@ -1,6 +1,8 @@
 package com.redhat.rharyanto.hellovertx;
 
 import com.hazelcast.config.Config;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
 import com.redhat.rharyanto.hellovertx.util.BannerUtil;
 import com.redhat.rharyanto.hellovertx.util.PropertiesUtil;
 import io.netty.util.internal.logging.InternalLoggerFactory;
@@ -35,6 +37,7 @@ public class Application {
         // 'dev' is multicast implementation of embedded HZ
         // 'file' is file configuration based implementation of embedded HZ
         String hzMode = (System.getProperty("hazelcast.mode") != null) ? System.getProperty("hazelcast.mode") : "dev";
+        logger.debug("Hazelcast mode: " + hzMode);
 
         ClusterManager hzMgr = null;
         if (hzMode.equalsIgnoreCase("dev")) {
@@ -46,8 +49,11 @@ public class Application {
             hzMgr = new HazelcastClusterManager(hazelcastConfig);
 
         } else if (hzMode.equalsIgnoreCase("file")) {
+            logger.debug("Hazelcast configuration file: " + System.getProperty("vertx.hazelcast.config"));
             hzMgr = new HazelcastClusterManager();
         }
+
+        HazelcastInstance hzInstance = Hazelcast.newHazelcastInstance();
 
         VertxOptions options = new VertxOptions().setClusterManager(hzMgr);
         Vertx.clusteredVertx(options, res -> {

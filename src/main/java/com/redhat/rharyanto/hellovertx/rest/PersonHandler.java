@@ -1,5 +1,6 @@
 package com.redhat.rharyanto.hellovertx.rest;
 
+import com.hazelcast.core.HazelcastInstance;
 import com.redhat.rharyanto.hellovertx.entity.Person;
 import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
@@ -8,7 +9,6 @@ import io.vertx.ext.web.RoutingContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author <a href="mailto:rharyant@redhat.com">Robertus Lilik Haryanto</a>
@@ -42,6 +42,18 @@ public class PersonHandler {
 
     public PersonHandler() {
         persons = DataInitializer.init();
+    }
+
+    public PersonHandler(HazelcastInstance hzInstance) {
+        if (hzInstance != null) {
+            persons = hzInstance.getList("person");
+            if (persons.size() != 0) {
+                logger.info("Sync-ing existing Person data from Hazelcast...");
+            } else {
+                logger.info("Initialising new Person data...");
+                persons.addAll(DataInitializer.init());
+            }
+        }
     }
 
     public void getAll(RoutingContext rc) {

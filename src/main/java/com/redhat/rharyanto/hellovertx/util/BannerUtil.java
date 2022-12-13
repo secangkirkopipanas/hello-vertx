@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * @author <a href="mailto:rharyant@redhat.com">Robertus Lilik Haryanto</a>
+ */
 public class BannerUtil {
 
     private static String readFromInputStream(InputStream inputStream) throws IOException {

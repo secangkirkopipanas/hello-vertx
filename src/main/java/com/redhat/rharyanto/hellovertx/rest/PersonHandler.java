@@ -1,6 +1,8 @@
 package com.redhat.rharyanto.hellovertx.rest;
 
 import com.redhat.rharyanto.hellovertx.entity.Person;
+import io.vertx.core.impl.logging.Logger;
+import io.vertx.core.impl.logging.LoggerFactory;
 import io.vertx.core.json.Json;
 import io.vertx.ext.web.RoutingContext;
 
@@ -12,6 +14,10 @@ import java.util.stream.Collectors;
  * @author <a href="mailto:rharyant@redhat.com">Robertus Lilik Haryanto</a>
  */
 public class PersonHandler {
+
+    private final static Logger logger = LoggerFactory.getLogger(PersonHandler.class);
+
+    private final static String ENDPOINT = "/person";
 
     public class DataInitializer {
         public static List<Person> init() {
@@ -39,10 +45,12 @@ public class PersonHandler {
     }
 
     public void getAll(RoutingContext rc) {
+        logger.info("Incoming request to " + PersonHandler.ENDPOINT + "/all");
         rc.response().end(Json.encode(persons));
     }
 
     public void get(RoutingContext rc) {
+        logger.info("Incoming request to " + PersonHandler.ENDPOINT + "/:name");
         var params = rc.pathParams();
         var name = params.get("name");
         List<Person> results = persons.stream()
@@ -53,6 +61,7 @@ public class PersonHandler {
     }
 
     public void getBySex(RoutingContext rc) {
+        logger.info("Incoming request to " + PersonHandler.ENDPOINT + "/sex/:sex");
         var params = rc.pathParams();
         var sex = params.get("sex");
         List<Person> results = persons.stream()

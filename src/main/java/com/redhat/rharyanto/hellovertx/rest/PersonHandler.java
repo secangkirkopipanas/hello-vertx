@@ -74,4 +74,15 @@ public class PersonHandler {
                 }).toList();
         rc.response().end(Json.encode(results));
     }
+
+    public void getByCountry(RoutingContext rc) {
+        logger.info("Incoming request to " + PersonHandler.ENDPOINT + "/country/:country");
+        var params = rc.pathParams();
+        var country = params.get("country");
+        List<Person> results = persons.stream()
+                .filter(p -> {
+                    return country.equalsIgnoreCase(p.getCountry().toString());
+                }).toList();
+        rc.response().end(Json.encode(results));
+    }
 }

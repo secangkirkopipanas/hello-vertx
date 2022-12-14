@@ -10,7 +10,6 @@ import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.healthchecks.HealthCheckHandler;
-import io.vertx.ext.healthchecks.HealthChecks;
 import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.web.Router;
 import lombok.NoArgsConstructor;
@@ -99,5 +98,14 @@ public class MainVerticle extends AbstractVerticle {
 
     logger.info("Exposing " + router.getRoutes().size() + " routes...");
     return router;
+  }
+
+  @Override
+  public void stop(Promise<Void> startPromise) throws Exception {
+    Runtime.getRuntime().addShutdownHook(new Thread() {
+      public void run() {
+        vertx.close();
+      }
+    });
   }
 }

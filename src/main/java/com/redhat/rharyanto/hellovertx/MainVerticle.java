@@ -66,6 +66,10 @@ public class MainVerticle extends AbstractVerticle {
       });
   }
 
+  /**
+   * Main router
+   * @return Router router
+   */
   private Router route() {
     // Create a Router
     Router router = Router.router(vertx);

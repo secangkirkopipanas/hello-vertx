@@ -194,13 +194,10 @@
             <configuration>
               <images>
                 <image>
-                  <name>quay.io/rh_rh/hello-vertx</name>
+                  <name>quay.io/rh_rh/hello-vertx:${container.image.tag}</name>
                   <build>
                     <from>${base.container.image}</from>
                     <maintainer>rharyant@redhat.com</maintainer>
-                    <tags>
-                      <tag>${container.image.tag}</tag>
-                    </tags>
                     <ports>
                       <port>9090</port>
                     </ports>

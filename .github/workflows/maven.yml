@@ -10,9 +10,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "develop", "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "develop", "main" ]
 
 jobs:
   build:
@@ -28,7 +28,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: VERTX_CONFIG_PATH=conf/application.yaml mvn -B clean package --file pom.xml
+      env:
+        VERTX_CONFIG_PATH: "conf/application.yaml"
+        MAVEN_OPTS: "-Djkube.docker.username=${{ secrets.QUAY_IO_USERNAME }} -Djkube.docker.password=${{ secrets.QUAY_IO_PASSWORD }}"
+      run: |
+        mvn -B clean package k8s:build k8s:push -Pk8s --file pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph

@@ -100,12 +100,12 @@ public class MainVerticle extends AbstractVerticle {
     return router;
   }
 
-  @Override
-  public void stop(Promise<Void> startPromise) throws Exception {
-    Runtime.getRuntime().addShutdownHook(new Thread() {
-      public void run() {
-        vertx.close();
-      }
-    });
-  }
+//  @Override
+//  public void stop(Promise<Void> startPromise) throws Exception {
+//    Runtime.getRuntime().addShutdownHook(new Thread() {
+//      public void run() {
+//        vertx.close();
+//      }
+//    });
+//  }
 }

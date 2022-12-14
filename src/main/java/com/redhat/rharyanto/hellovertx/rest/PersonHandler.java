@@ -7,7 +7,7 @@ import io.vertx.core.impl.logging.LoggerFactory;
 import io.vertx.core.json.Json;
 import io.vertx.ext.web.RoutingContext;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,20 +21,12 @@ public class PersonHandler {
 
     public class DataInitializer {
         public static List<Person> init() {
-            Person p1 = new Person("Robert", 25, Person.Sex.MALE);
-            Person p2 = new Person("Defi", 24, Person.Sex.FEMALE);
-            Person p3 = new Person("Raphael", 23, Person.Sex.MALE);
-            Person p4 = new Person("Mikhael", 22, Person.Sex.MALE);
-            Person p5 = new Person("Gabriel", 21, Person.Sex.MALE);
-
-            List<Person> persons = new ArrayList<>();
-            persons.add(p1);
-            persons.add(p2);
-            persons.add(p3);
-            persons.add(p4);
-            persons.add(p5);
-
-            return persons;
+            Person p1 = new Person("Robert", 25, Person.Sex.MALE, "Indonesia");
+            Person p2 = new Person("Defi", 24, Person.Sex.FEMALE, "Australia");
+            Person p3 = new Person("Raphael", 23, Person.Sex.MALE, "Vietnam");
+            Person p4 = new Person("Mikhael", 22, Person.Sex.MALE, "Malaysia");
+            Person p5 = new Person("Gabriel", 21, Person.Sex.MALE, "Singapore");
+            return Arrays.asList(p1, p2, p3, p4, p5);
         }
     }
 

@@ -11,10 +11,9 @@ import io.vertx.core.impl.logging.LoggerFactory;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.healthchecks.HealthCheckHandler;
 import io.vertx.ext.healthchecks.HealthChecks;
+import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.web.Router;
 import lombok.NoArgsConstructor;
-
-import java.io.IOException;
 
 /**
  * @author <a href="mailto:rharyant@redhat.com">Robertus Lilik Haryanto</a>
@@ -44,6 +43,14 @@ public class MainVerticle extends AbstractVerticle {
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
 
+    healthCheckHandler = HealthCheckHandler.create(vertx);
+    healthCheckHandler.register("hazelcast", promise -> {
+      promise.complete(Status.OK(new JsonObject()
+              .put("mode", System.getenv("HZ_MODE"))
+              .put("file", System.getProperty("vertx.hazelcast.config"))
+      ));
+    });
+
     // Start the server
     int serverPort = PropertiesUtil.getConfigAsInteger(jsonConfig, "server.port", null);
     vertx.createHttpServer()
@@ -57,11 +64,12 @@ public class MainVerticle extends AbstractVerticle {
             logger.error("Failed to start HTTP server on port " + serverPort);
           }
       });
-
-    HealthChecks hc = HealthChecks.create(vertx);
-    healthCheckHandler = HealthCheckHandler.createWithHealthChecks(hc);
   }
 
+  /**
+   * Main router
+   * @return Router router
+   */
   private Router route() {
     // Create a Router
     Router router = Router.router(vertx);
@@ -87,7 +95,7 @@ public class MainVerticle extends AbstractVerticle {
             .handler(personHandler::getBySex)
             .failureHandler(frc -> frc.response().setStatusCode(404).end());
 
-    router.get("/health*").handler(healthCheckHandler);
+    router.get("/health").handler(healthCheckHandler);
 
     logger.info("Exposing " + router.getRoutes().size() + " routes...");
     return router;

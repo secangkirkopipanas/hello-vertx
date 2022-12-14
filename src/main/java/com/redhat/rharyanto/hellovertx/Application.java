@@ -35,8 +35,10 @@ public class Application {
         String hzMode = (System.getenv("HZ_MODE") != null) ? System.getenv("HZ_MODE") : "dev";
         logger.debug("Hazelcast mode: " + hzMode);
 
+        // Initialise HZ cluster manager
         HazelcastClusterManager hzMgr = null;
         if (hzMode.equalsIgnoreCase("dev")) {
+            // Create new development cluster manager (multicast)
             Config hazelcastConfig = new Config();
             hazelcastConfig.getNetworkConfig().getJoin().getTcpIpConfig().addMember("127.0.0.1").setEnabled(true);
             hazelcastConfig.getNetworkConfig().getJoin().getMulticastConfig().setEnabled(false);
@@ -45,10 +47,12 @@ public class Application {
             hzMgr = new HazelcastClusterManager(hazelcastConfig);
 
         } else if (hzMode.equalsIgnoreCase("file")) {
+            // Create cluster manager based on the configuration file
             logger.debug("Hazelcast configuration file: " + System.getProperty("vertx.hazelcast.config"));
             hzMgr = new HazelcastClusterManager();
         }
 
+        // Initialise Vert.x with cluster configuration
         VertxOptions options = new VertxOptions().setClusterManager(hzMgr);
         Vertx.clusteredVertx(options, res -> {
             if (res.succeeded()) {
@@ -56,6 +60,7 @@ public class Application {
                 ConfigRetriever configRetriever = ConfigRetriever.create(vertx);
                 configRetriever.getConfig(json -> {
                     try {
+                        // Show banner
                         BannerUtil.show(PropertiesUtil.getConfig(json.result(), "banner.file", null));
 
                         HazelcastInstance hzInstance = ((HazelcastClusterManager) options.getClusterManager()).getHazelcastInstance();
@@ -68,7 +73,7 @@ public class Application {
                     }
                 });
             } else {
-                // failed!
+                logger.error("Unable to initialise Vert.x - " + res.cause());
             }
         });
     }

@@ -6,13 +6,13 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: CI pipeline on main branch
 
 on:
   push:
-    branches: [ "develop", "main" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "develop", "main" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -27,12 +27,16 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
+    - name: Build source code
       env:
         VERTX_CONFIG_PATH: "conf/application.yaml"
+      run: |
+        mvn -B clean package --file pom.xml
+    - name: Build container image
+      env:
         MAVEN_OPTS: "-Djkube.docker.username=${{ secrets.QUAY_IO_USERNAME }} -Djkube.docker.password=${{ secrets.QUAY_IO_PASSWORD }}"
       run: |
-        mvn -B clean package k8s:build k8s:push -Pk8s --file pom.xml
+        mvn -Dcontainer.image.tag=latest -B k8s:build k8s:push -Pk8s --file pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph

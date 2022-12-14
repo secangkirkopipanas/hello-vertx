@@ -31,6 +31,7 @@
     <!-- Kubernetes -->
     <kubernetes.default.svc>hello-vertx:latest</kubernetes.default.svc>
     <base.container.image>quay.io/jkube/jkube-java:0.0.17</base.container.image>
+    <container.image.tag>${project.version}</container.image.tag>
   </properties>
 
   <developers>
@@ -198,8 +199,7 @@
                     <from>${base.container.image}</from>
                     <maintainer>rharyant@redhat.com</maintainer>
                     <tags>
-                      <tag>latest</tag>
-                      <tag>${project.version}</tag>
+                      <tag>${container.image.tag}</tag>
                     </tags>
                     <ports>
                       <port>9090</port>

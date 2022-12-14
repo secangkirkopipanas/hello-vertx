@@ -29,7 +29,7 @@
     <launcher.class>com.redhat.rharyanto.hellovertx.Application</launcher.class>
 
     <!-- Kubernetes -->
-    <kubernetes.default.svc>hello-vertx:latest</kubernetes.default.svc>
+    <kubernetes.default.svc>hello-vertx:${project.version}</kubernetes.default.svc>
     <base.container.image>quay.io/jkube/jkube-java:0.0.17</base.container.image>
     <container.image.tag>${project.version}</container.image.tag>
   </properties>

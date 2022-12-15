@@ -222,12 +222,14 @@
                       </exec>
                     </shell>
                     <!-- Run any prerequisites here, i.e. installation of any software -->
+                    <!--
                     <runCmds>
                       <run>microdnf update</run>
                       <run>mkdir -pv /opt/app</run>
                       <run>wget https://filesamples.com/samples/document/txt/sample1.txt -P /opt/app</run>
                       <run>ls -al /opt/app</run>
                     </runCmds>
+                    -->
 
                     <entryPoint>
                       <!-- exec form for ENTRYPOINT -->

@@ -219,6 +219,27 @@
                   </build>
                 </image>
               </images>
+              <resources>
+                <annotations>
+                  <all>
+                    <artifactId>${project.artifactId}</artifactId>
+                    <version>${project.version}</version>
+                  </all>
+                  <deployment>
+                    <my>deployment</my>
+                  </deployment>
+                </annotations>
+                <liveness>
+                  <getUrl>http://your-domain.com:9090/health</getUrl>
+                  <initialDelaySeconds>3</initialDelaySeconds>
+                  <timeoutSeconds>3</timeoutSeconds>
+                </liveness>
+                <startup>
+                  <failureThreshold>30</failureThreshold>
+                  <periodSeconds>10</periodSeconds>
+                  <getUrl>http://your-domain.com:9090/health</getUrl>
+                </startup>
+              </resources>
             </configuration>
             <executions>
               <execution>

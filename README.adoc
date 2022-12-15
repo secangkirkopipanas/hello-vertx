@@ -2,7 +2,15 @@
 
 image:https://img.shields.io/badge/vert.x-4.3.5-purple.svg[link="https://vertx.io"]
 
-This application was generated using http://start.vertx.io
+This application is a sample application for App Modernization journey with the following technology stack:
+
+- link:https://maven.apache.org/[Apache Maven]
+- link:https://vertx.io/[Vert.x Framework]
+- link:https://hazelcast.com/[Hazelcast]
+- link:https://logging.apache.org/log4j/2.x/manual/[Log4j2]
+- link:https://www.eclipse.org/jkube/[JKube Maven Plugin]
+
+This application was generated using http://start.vertx.io.
 
 == Building
 
@@ -37,5 +45,4 @@ To push Docker image of your application into Docker registry:
 * https://stackoverflow.com/questions/tagged/vert.x?sort=newest&pageSize=15[Vert.x Stack Overflow]
 * https://groups.google.com/forum/?fromgroups#!forum/vertx[Vert.x User Group]
 * https://gitter.im/eclipse-vertx/vertx-users[Vert.x Gitter]
-
 

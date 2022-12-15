@@ -198,49 +198,18 @@
             <artifactId>kubernetes-maven-plugin</artifactId>
             <version>${kubernetes-maven-plugin.version}</version>
             <configuration>
+              <verbose>true</verbose>
               <images>
                 <image>
                   <name>quay.io/rh_rh/hello-vertx:${container.image.tag}</name>
                   <build>
                     <from>${base.container.image}</from>
                     <maintainer>rharyant@redhat.com</maintainer>
-
-                    <ports>
-                      <port>9090</port>
-                    </ports>
-
+                    <dockerFile>Dockerfile</dockerFile>
+                    <contextDir>.</contextDir>
                     <buildOptions>
                       <shmsize>2147483648</shmsize>
                     </buildOptions>
-
-                    <user>root</user>
-
-                    <shell>
-                      <exec>
-                        <arg>/bin/bash</arg>
-                        <arg>-c</arg>
-                      </exec>
-                    </shell>
-                    <!-- Run any prerequisites here, i.e. installation of any software -->
-                    <runCmds>
-                      <run>microdnf update</run>
-                      <run>curl --create-dirs -o /opt/app/sample1.txt https://filesamples.com/samples/document/txt/sample1.txt</run>
-                      <run>ls -al /opt/app</run>
-                    </runCmds>
-
-                    <entryPoint>
-                      <!-- exec form for ENTRYPOINT -->
-                      <exec>
-                        <arg>java</arg>
-                        <arg>-jar</arg>
-                        <arg>/opt/app/${project.artifactId}-${project.version}.jar</arg>
-                      </exec>
-                    </entryPoint>
-
-                    <assembly>
-                      <mode>dir</mode>
-                      <targetDir>/opt/app</targetDir>
-                    </assembly>
                   </build>
                 </image>
               </images>

@@ -24,6 +24,7 @@
     <junit-jupiter.version>5.7.0</junit-jupiter.version>
     <netty-resolver-dns-native-macos.version>4.1.85.Final</netty-resolver-dns-native-macos.version>
     <hazelcast-kubernetes.version>2.2.3</hazelcast-kubernetes.version>
+    <fluentd-log4j-appender.version>1.0.0</fluentd-log4j-appender.version>
 
     <main.verticle>com.redhat.rharyanto.hellovertx.MainVerticle</main.verticle>
     <launcher.class>com.redhat.rharyanto.hellovertx.Application</launcher.class>
@@ -103,6 +104,11 @@
       <artifactId>log4j-slf4j-impl</artifactId>
       <version>${log4j.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.github.technologize</groupId>
+      <artifactId>fluentd-log4j-appender</artifactId>
+      <version>${fluentd-log4j-appender.version}</version>
     </dependency>
     <dependency>
       <groupId>io.netty</groupId>
@@ -198,12 +204,31 @@
                   <build>
                     <from>${base.container.image}</from>
                     <maintainer>rharyant@redhat.com</maintainer>
+
                     <ports>
                       <port>9090</port>
                     </ports>
+
                     <buildOptions>
                       <shmsize>2147483648</shmsize>
                     </buildOptions>
+
+                    <user>root</user>
+
+                    <shell>
+                      <exec>
+                        <arg>/bin/bash</arg>
+                        <arg>-c</arg>
+                      </exec>
+                    </shell>
+                    <!-- Run any prerequisites here, i.e. installation of any software -->
+                    <runCmds>
+                      <run>microdnf update</run>
+                      <run>mkdir -pv /opt/app</run>
+                      <run>wget https://filesamples.com/samples/document/txt/sample1.txt -P /opt/app</run>
+                      <run>ls -al /opt/app</run>
+                    </runCmds>
+
                     <entryPoint>
                       <!-- exec form for ENTRYPOINT -->
                       <exec>
@@ -212,6 +237,7 @@
                         <arg>/opt/app/${project.artifactId}-${project.version}.jar</arg>
                       </exec>
                     </entryPoint>
+
                     <assembly>
                       <mode>dir</mode>
                       <targetDir>/opt/app</targetDir>
@@ -220,13 +246,20 @@
                 </image>
               </images>
               <resources>
+                <labels>
+                  <all>
+                    <name>hello-vertx</name>
+                  </all>
+                </labels>
+                <imagePullPolicy>Always</imagePullPolicy>
+                <replicas>2</replicas>
                 <annotations>
                   <all>
                     <artifactId>${project.artifactId}</artifactId>
                     <version>${project.version}</version>
                   </all>
                   <deployment>
-                    <my>deployment</my>
+                    <app>hello-vertx</app>
                   </deployment>
                 </annotations>
                 <liveness>

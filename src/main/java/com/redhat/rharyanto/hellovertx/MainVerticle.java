@@ -42,7 +42,10 @@ public class MainVerticle extends AbstractVerticle {
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
 
+    // Health check handler
     healthCheckHandler = HealthCheckHandler.create(vertx);
+
+    // Additional health check handler, depends on your requirements
     healthCheckHandler.register("hazelcast", promise -> {
       promise.complete(Status.OK(new JsonObject()
               .put("mode", System.getenv("HZ_MODE"))
@@ -50,7 +53,7 @@ public class MainVerticle extends AbstractVerticle {
       ));
     });
 
-    // Start the server
+    // Start the HTTP server
     int serverPort = PropertiesUtil.getConfigAsInteger(jsonConfig, "server.port", null);
     vertx.createHttpServer()
       .requestHandler(route())
@@ -100,12 +103,9 @@ public class MainVerticle extends AbstractVerticle {
     return router;
   }
 
-//  @Override
-//  public void stop(Promise<Void> startPromise) throws Exception {
-//    Runtime.getRuntime().addShutdownHook(new Thread() {
-//      public void run() {
-//        vertx.close();
-//      }
-//    });
-//  }
+  @Override
+  public void stop(Promise<Void> startPromise) throws Exception {
+    vertx.close();
+    startPromise.complete();
+  }
 }

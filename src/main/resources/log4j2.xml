@@ -4,7 +4,46 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{dd-MM-yyyy HH:mm:ss.SSS} %highlight{%-5level} [%-30t] %style{%-50logger{1.}} : %msg%n"/>
         </Console>
+
+        <!--
+        If you want to stream the log via socket
+        -->
+        <!--
+        <Socket name="socket" host="localhost" port="9500">
+            <JsonLayout properties="true"/>
+        </Socket>
+        -->
+
+        <!--
+        If you want to stream the log to Fluentd
+        -->
+        <!--
+        <Fluentd name="fluentd" tag="hello-vertx">
+            <Field name="application">hello-vertx</Field>
+            <Field name="lookupField" pattern="%N"/>
+            <FluentdConfig
+                    maxBufferSize="536870912"
+                    bufferChunkInitialSize="1048576"
+                    bufferChunkRetentionSize="4194304"
+                    bufferChunkRetentionTimeMillis="1000"
+                    flushAttemptIntervalMillis="600"
+                    waitUntilBufferFlushed="10"
+                    waitUntilFlusherTerminated="10"
+                    senderMaxRetryCount="8"
+                    senderBaseRetryIntervalMillis="400"
+                    senderMaxRetryIntervalMillis="30000"
+                    connectionTimeoutMillis="5000"
+                    readTimeoutMillis="5000"
+                    ackResponseMode="true"
+                    sslEnabled="false"
+                    jvmHeapBufferMode="true"
+                    fileBackupDir="true">
+                <Server host="localhost" port="24224" />
+            </FluentdConfig>
+        </Fluentd>
+        -->
     </Appenders>
+
     <Loggers>
         <Logger name="com.redhat.rharyanto.hellovertx" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
@@ -13,4 +52,5 @@
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
+
 </Configuration>

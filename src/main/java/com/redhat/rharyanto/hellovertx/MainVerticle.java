@@ -47,8 +47,9 @@ public class MainVerticle extends AbstractVerticle {
 
     // Additional health check handler, depends on your requirements
     healthCheckHandler.register("hazelcast", promise -> {
+      String hzMode = (System.getenv("HZ_MODE") != null) ? System.getenv("HZ_MODE") : "dev";
       promise.complete(Status.OK(new JsonObject()
-              .put("mode", System.getenv("HZ_MODE"))
+              .put("mode", hzMode)
               .put("file", System.getProperty("vertx.hazelcast.config"))
       ));
     });
@@ -82,6 +83,11 @@ public class MainVerticle extends AbstractVerticle {
               .end("<h1>Hello from my first Vert.x application</h1>");
     });
 
+    router.get("/person")
+            .produces("application/json")
+            .handler(personHandler::getAll)
+            .failureHandler(frc -> frc.response().setStatusCode(404).end());
+
     router.get("/person/all")
             .produces("application/json")
             .handler(personHandler::getAll)
@@ -95,6 +101,11 @@ public class MainVerticle extends AbstractVerticle {
     router.get("/person/sex/:sex")
             .produces("application/json")
             .handler(personHandler::getBySex)
+            .failureHandler(frc -> frc.response().setStatusCode(404).end());
+
+    router.get("/person/country/:country")
+            .produces("application/json")
+            .handler(personHandler::getByCountry)
             .failureHandler(frc -> frc.response().setStatusCode(404).end());
 
     router.get("/health").handler(healthCheckHandler);

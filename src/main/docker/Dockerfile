@@ -2,7 +2,7 @@
 # base operating system image purpose built for containers. For more information
 # see https://developers.redhat.com/products/rhel/ubi
 #
-FROM quay.io/jkube/jkube-java:0.0.17
+FROM quay.io/jkube/jkube-java:0.0.19
 MAINTAINER Robertus Lilik Haryanto <rharyant@redhat.com>
 USER root
 
@@ -22,13 +22,9 @@ RUN \
 RUN \
     mkdir -pv /opt/app
 
-### Block to custom, to have any other installation
-RUN \
-    curl --create-dirs -o /opt/app/sample1.txt https://filesamples.com/samples/document/txt/sample1.txt
-
 USER jboss
 WORKDIR ${APP_BASEDIR}
-COPY maven/ ${APP_BASEDIR}
+COPY target/${APP_NAME}-${APP_VERSION}.jar ${APP_BASEDIR}
 
 EXPOSE 9090
 

@@ -19,6 +19,7 @@ src/container/**/*.jar
 .idea
 *.iws
 *.iml
+*.eml
 *.ipr
 
 ### NetBeans ###

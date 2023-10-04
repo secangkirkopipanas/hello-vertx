@@ -11,18 +11,18 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-    <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
-    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-    <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
-    <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
-    <kubernetes-maven-plugin.version>1.10.1</kubernetes-maven-plugin.version>
+    <maven-compiler-plugin.version>	3.11.0</maven-compiler-plugin.version>
+    <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
+    <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+    <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
+    <maven-dependency-plugin.version>3.6.0</maven-dependency-plugin.version>
+    <kubernetes-maven-plugin.version>1.14.0</kubernetes-maven-plugin.version>
 
-    <vertx.version>4.3.5</vertx.version>
-    <lombok.version>1.18.24</lombok.version>
-    <log4j.version>2.19.0</log4j.version>
-    <junit-jupiter.version>5.7.0</junit-jupiter.version>
-    <netty-resolver-dns-native-macos.version>4.1.85.Final</netty-resolver-dns-native-macos.version>
+    <vertx.version>4.4.5</vertx.version>
+    <lombok.version>1.18.30</lombok.version>
+    <log4j.version>2.20.0</log4j.version>
+    <junit-jupiter.version>5.10.0</junit-jupiter.version>
+    <netty-resolver-dns-native-macos.version>4.1.99.Final</netty-resolver-dns-native-macos.version>
     <hazelcast-kubernetes.version>2.2.3</hazelcast-kubernetes.version>
     <fluentd-log4j-appender.version>1.0.0</fluentd-log4j-appender.version>
 
@@ -141,9 +141,6 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin.version}</version>
-        <configuration>
-          <release>17</release>
-        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>

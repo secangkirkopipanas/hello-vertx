@@ -38,3 +38,4 @@ build/
 *.userlibraries
 
 app.env
+dependency-reduced-pom.xml

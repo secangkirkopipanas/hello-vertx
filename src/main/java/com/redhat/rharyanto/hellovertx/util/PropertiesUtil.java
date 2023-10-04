@@ -16,7 +16,7 @@ public class PropertiesUtil {
       String innerKey = key.substring(0, key.indexOf("."));
       String remaining = key.substring(key.indexOf(".") + 1);
 
-      if (jsonObject.containsKey(innerKey)) {
+      if (jsonObject != null && jsonObject.containsKey(innerKey)) {
         return getConfig(jsonObject.getJsonObject(innerKey), remaining, def);
       } else {
         return null;
@@ -28,6 +28,10 @@ public class PropertiesUtil {
   }
 
   public static Integer getConfigAsInteger(JsonObject jsonObject, String key, String def) {
-    return Integer.parseInt(getConfig(jsonObject, key, def));
+    if (jsonObject != null) {
+      return Integer.parseInt(getConfig(jsonObject, key, def));
+    } else {
+      return null;
+    }
   }
 }
